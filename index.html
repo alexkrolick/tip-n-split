@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+	<meta title="Calculator">
+	<meta lang="en">
+	<meta encoding="utf-8">
+	<link href='https://fonts.googleapis.com/css?family=Pompiere' rel='stylesheet' type='text/css'>
+	<script>
+		function calculate() {
+			var bill = parseFloat(document.querySelector('#billAmount').value)
+			var tipFactor = parseInt(document.querySelector('#tipPercent').value) / 100
+			var other = parseFloat(document.querySelector("#otherAmount").value)
+			var partySize = parseInt(document.querySelector('#partySize').value)
+			var tip = bill * tipFactor
+			var total = (bill + tip + other) / partySize
+			document.querySelector("#totalAmount").value = total.toFixed(2)
+			document.querySelector("#tipAmount").textContent = tip.toFixed(2)
+		}
+		window.onload = function() {
+			calculate()
+			var e = document.querySelectorAll('input')
+			;[].forEach.call(e,this.oninput = calculate)
+		}
+	</script>
+	<style type="text/css">
+		body { margin: 1em auto; width: 80%; background-color: #1a1a1f; color: #eef; } 
+		.calculator { font-family: 'Pompiere'; line-height: 1.5; font-size: 2rem; }
+		.calculator h1 { margin-bottom: 0}
+		.form-element {	margin-top: 1em; display: inline-block; padding: 0.125em 0.5em}
+		.form-element input { line-height: 2; font-size: 100%; font-weight: bold; padding: 0.1rem; text-align: right; font-family: 'Pompiere'; border-radius: 4px; border: 1px solid #ccc; display:block;}
+		.form-element label { font-weight: bold; display: block; color: inherit; font-size: 100%; }
+		.form-element .note { font-size: 87.5%; font-weight: bold; font-style: italic; }
+		@media (max-width: 50rem) {
+		  body { margin: 1em 2em; width: 100%; }
+		  .calculator { font-size: 3rem;}
+		}
+	</style>
+</head>
+<body>
+	<article class="calculator">
+		<h1>Tip 'n' Split Calculator</h1>
+		<div class="form-element" style="display:inline-block">
+			<label for="billAmount">Bill</label>
+			<input type="number" id="billAmount" min="0" max="9999999" value="0.00">
+			<span style="note">&nbsp;</span>
+		</div>
+		<div class="form-element" style="display:inline-block">
+			<label for="tipPercent">+ Tip %</label>
+			<input type="number" id="tipPercent" min="0" step="1" max="999" value="15">
+			<span id="tipAmount" class="note">0.00</span>
+		</div>
+		<div class="form-element" style="display:inline-block">
+			<label for="otherAmount">+ Other</label>
+			<input type="number" id="otherAmount" min="0" step="1" max="9999" value="0">
+			<span class="note">&nbsp</span>
+		</div>
+		<div class="form-element">
+			<label for="partySize">&divide; Split</label>
+			<input type="number" id="partySize" min="1" step="1" value="1" max="99">
+			<span class="note">&nbsp;</span>
+		</div>
+		<div class="form-element">
+			<label for="totalAmount">Total</label>
+			<input type="number" min="0" max="9999999" id="totalAmount" readonly>
+			<span class="note">each</span>
+		</div>
+	</article>
+</body>
